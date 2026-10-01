@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ЖЕЛЕЗОПК — Личный кабинет</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="btn-back">← Назад в каталог</a>
+    
+    <div class="card-box">
+      <button class="btn-logout" id="logout-btn">Выйти</button>
+      <h2>Личный кабинет</h2>
+      <p>Email: <b id="user-email">Загрузка...</b></p>
+      <p>Статус: <b id="user-role" style="color: #4caf50;">Загрузка...</b></p>
+    </div>
+
+    <!-- Раздел покупок -->
+    <div class="card-box">
+      <h3>Мои покупки</h3>
+      <div id="orders-list">Загрузка истории покупок...</div>
+    </div>
+
+    <!-- Мои отзывы -->
+    <div class="card-box">
+      <h3>Мои отзывы</h3>
+      <div id="my-reviews-list">Загрузка отзывов...</div>
+    </div>
+  </div>
+
+  <!-- Всплывающее окно для написания отзыва -->
+  <div id="review-modal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 420px; text-align: left;">
+      <button class="close-btn" id="close-review-modal">✕</button>
+      <h3 id="review-modal-title" style="margin-bottom: 15px; font-size: 1.1em;">Оставить отзыв</h3>
+      
+      <form id="profile-review-form">
+        <input type="hidden" id="review-product-title">
+        <input type="hidden" id="review-product-id">
+
+        <label style="display: block; margin-bottom: 6px; color: #ccc; font-size: 0.9em;">Оценка:</label>
+        <select id="modal-rating-select" style="width: 100%; padding: 8px; margin-bottom: 12px; background: #222; color: #fff; border: 1px solid #444; border-radius: 4px;">
+          <option value="5" selected>⭐⭐⭐⭐⭐ (5 - Отлично)</option>
+          <option value="4">⭐⭐⭐⭐ (4 - Хорошо)</option>
+          <option value="3">⭐⭐⭐ (3 - Удовлетворительно)</option>
+          <option value="2">⭐⭐ (2 - Плохо)</option>
+          <option value="1">⭐ (1 - Ужасно)</option>
+        </select>
+
+        <label style="display: block; margin-bottom: 6px; color: #ccc; font-size: 0.9em;">Ваш комментарий:</label>
+        <textarea id="modal-review-text" rows="4" required placeholder="Напишите ваш отзыв о товаре..." style="width: 100%; padding: 8px; background: #222; color: #fff; border: 1px solid #444; border-radius: 4px; resize: none; margin-bottom: 15px;"></textarea>
+
+        <button type="submit" style="width: 100%; background: #22c55e; color: white; padding: 10px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Сохранить отзыв</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="js/profile.js"></script>
+</body>
+</html>

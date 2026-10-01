@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ЖЕЛЕЗОПК — Каталог комплектующих</title>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+  <link rel="modulepreload" href="js/main.js">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="header">
+    <h1>ЖЕЛЕЗОПК</h1>
+    <div>
+      <button class="nav-btn cart" onclick="toggleCart()">Корзина (<span id="cart-count">0</span>)</button>
+      <span id="auth-nav"></span>
+    </div>
+  </div>
+
+  <!-- Компактная Hero-секция со встроенным поиском -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Каталог комплектующих ПК</h1>
+      <p class="hero-description">
+        База данных видеокарт и компонентов. Сравнение характеристик, актуальная стоимость и отзывы пользователей.
+      </p>
+      <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="Поиск видеокарты (например, RTX 4090)...">
+      </div>
+    </div>
+  </section>
+
+  <h2>Каталог товаров</h2>
+  <div id="products-list"></div>
+
+  <!-- Модальное окно Корзины -->
+  <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="toggleCart()">✕</button>
+      <h3>Ваша корзина</h3>
+      <div id="cart-items">Корзина пуста</div>
+      <h4 id="cart-total" style="margin-top: 15px; color: #22c55e;">Итого: 0 ₸</h4>
+    </div>
+  </div>
+
+  <!-- Модальное окно Детального просмотра товара -->
+  <div id="product-modal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" id="close-modal-btn">✕</button>
+      <img id="modal-img" src="" alt="" style="width: 100%; height: 180px; object-fit: contain; margin-bottom: 10px;">
+      <h3 id="modal-title" style="margin: 5px 0;"></h3>
+      <div id="modal-rating" class="rating"></div>
+      <p id="modal-description" style="color: #a1a1aa; font-size: 0.9em; margin: 10px 0;"></p>
+      <div id="modal-price" class="price" style="margin-bottom: 15px;"></div>
+      <button id="modal-add-btn" class="nav-btn login" style="width: 100%; margin: 0 0 15px 0; padding: 10px;">Добавить в корзину</button>
+      
+      <hr style="border: 0; border-top: 1px solid #27272a; margin: 15px 0;">
+      <h4 style="margin: 0 0 10px 0;">Отзывы покупателей:</h4>
+      <div id="modal-reviews-list" style="font-size: 0.9em; max-height: 150px; overflow-y: auto;">
+        Загрузка отзывов...
+      </div>
+
+      <p style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #27272a; color: #71717a; font-size: 0.85em;">
+        Отзыв можно оставить только после покупки — в <a href="profile.html">личном кабинете</a>.
+      </p>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

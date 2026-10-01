@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Пользователи: читать можно только себя (админ — всех).
+    // Роль при регистрации только "user"; менять роль через сайт нельзя,
+    // админа назначают вручную в консоли Firebase (Firestore -> users -> role = "admin").
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.role == 'user';
+      allow update, delete: if false;
+    }
+
+    // Товары: смотреть могут все, менять — только админ
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Корзина: только своя
+    match /carts/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    // Заказы: создать и читать свои, админ читает все; менять/удалять нельзя
+    match /orders/{orderId} {
+      allow read: if signedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // Отзывы: читать могут все, создать — авторизованный от своего имени.
+    // Изменять и удалять НЕЛЬЗЯ никому (в том числе админу через сайт).
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if signedIn()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.rating is int
+        && request.resource.data.rating >= 1
+        && request.resource.data.rating <= 5
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 1000
+        && request.resource.data.productTitle is string;
+      allow update, delete: if false;
+    }
+  }
+}
